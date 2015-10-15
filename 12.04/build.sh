@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -e -x -o pipefail
 
 ################
 # update base system
@@ -10,12 +10,14 @@ apt-get update
 ################
 # install base packages
 ################
-apt-get install --no-install-recommends -y supervisor inetutils-ping dnsutils curl
+apt-get install --no-install-recommends -y supervisor inetutils-ping dnsutils curl ca-certificates
 
 ################
 # install dockerize
 ################
-curl -sL https://github.com/jwilder/dockerize/releases/download/v0.0.2/dockerize-linux-amd64-v0.0.2.tar.gz | tar -C /usr/local/bin -xz
+curl -L https://github.com/jwilder/dockerize/releases/download/v0.0.2/dockerize-linux-amd64-v0.0.2.tar.gz -o dockerize.tgz
+tar -C /usr/local/bin -xzf dockerize.tgz
+rm dockerize.tgz
 
 ################
 # clean apt
